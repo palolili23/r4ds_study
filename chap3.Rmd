@@ -1,0 +1,169 @@
+---
+title: "Chap3"
+author: "Paloma"
+date: "11/28/2019"
+output: 
+  html_document:
+    df_printed: paged
+    theme: united
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# Chapter 3
+
+## 3.1 Intro
+
+
+## 3.2 First steps
+
+The idea is that we have:
+`ggplot(data) + <GEOM_FUNCTION(aes(), other feat>`
+
+```{r out.width=c('50%','50%'), fig.show='hold'}
+str(mpg)
+
+dim(mpg)
+
+ggplot(data = mpg,
+       aes(hwy, cyl)) +
+  geom_point()
+
+ggplot(data = mpg,
+       aes(class, drv)) +
+  geom_point()
+
+```
+
+We cant see the distribution of observations across categories.
+
+## 3.3 Aesthetic mapping
+
+Key tip:
+`group`: does not give a legend
+
+`color`: gives a legend, we need to `set.legend = FALSE` if we don't want it.
+
+`size`: not advised for discrete categories, ideally for weights or a count variable
+
+`shape`: is good for categorical, but it only has 25 built in shapes.
+
+`fill`: can also give color to some geom, but not `geom_plot`. I think it is similar to the shape/color and fill relationship.
+
+```{r out.width=c('50%','50%'), fig.show='hold'}
+ggplot(data = mpg,
+       aes(hwy, cyl, group = class)) +
+  geom_point() +
+  labs(title = "using group argument")
+
+ggplot(data = mpg,
+       aes(hwy, cyl, color = class)) +
+  geom_point() +
+    labs(title = "using color argument")
+
+ggplot(data = mpg,
+       aes(hwy, cyl, shape = class)) +
+  geom_point() +
+    labs(title = "using shape argument")
+
+ggplot(data = mpg,
+       aes(hwy, cyl, fill = class)) +
+  geom_point() +
+    labs(title = "using fill argument")
+
+ggplot(data = mpg,
+       aes(class, hwy)) +
+  geom_boxplot(aes(fill = class)) +
+    labs(title = "using fill argument")
+
+
+```
+
+If we want only one shape or color, that would NOT have to be inside the `aes()`, but as an argument of the `<geom_function()>`
+
+About the `shape`, it goes with `color` and `fill`.
+
+- From 0 to 14 *borders* are determined by `color`
+
+- From 15 to 18 are *filled* by `color`
+
+- From 21 - 24 the *border* is defined by `color` and *filled* 
+with `fill`
+
+<div class = "row">
+<div class = "col-md-4">
+```{r}
+ggplot(data = mpg, aes(hwy, cyl)) +
+  geom_point(shape = 3, color = "orange", size = 5) +
+    labs(title = "using shape argument")
+```
+</div>
+
+<div class = "col-md-4">
+```{r}
+ggplot(data = mpg, aes(hwy, cyl)) +
+  geom_point(shape = 16, color = "orange", size = 5) +
+    labs(title = "using shape argument")
+```
+</div>
+
+<div class = "col-md-4">
+```{r}
+ggplot(data = mpg, aes(hwy, cyl)) +
+  geom_point(shape = 22, color = "orange", fill = "yellow", size = 5) +
+    labs(title = "using shape argument")
+```
+</div>
+</div>
+
+## 3.4 Common problems
+
+Just remeber to use `?function_name`.
+
+## 3.5 Facets
+
+`facet_wrap` = makes rows, and usually goes like `facet_wrap(~ cat_var)`
+
+We can add `nrow` and `ncol`, `switch` changes where the title of each category goes, could be "x", "y" or "both".
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(~ class, nrow = 4, ncol = 2, switch = "y")
+```
+
+
+- `facet_grid` = Makes columns, it usually goes like `facet_grid(.~ cat_var)`
+
+<div class = "row">
+<div class = "col-md-6">
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_grid(. ~ class)
+```
+</div>
+
+<div class = "col-md-6">
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_grid(drv ~ class)
+```
+</div>
+</div>
+
+
+
+## 3.6 Geometric objects
+## 3.7 Statistical transformations
+## 3.8 Position adjustments
+## 3.9 Coordinate systems
+## 3.10 The layered grammar of graphics
+
+
+
