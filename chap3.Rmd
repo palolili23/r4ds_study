@@ -7,10 +7,12 @@ output:
     df_printed: paged
     theme: united
     code_folding: hide
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
 library(tidyverse)
 ```
 
@@ -102,7 +104,6 @@ ggplot(data = mpg, aes(hwy, cyl)) +
     labs(title = "using shape argument")
 ```
 </div>
-
 <div class = "col-md-4">
 ```{r}
 ggplot(data = mpg, aes(hwy, cyl)) +
@@ -110,7 +111,6 @@ ggplot(data = mpg, aes(hwy, cyl)) +
     labs(title = "using shape argument")
 ```
 </div>
-
 <div class = "col-md-4">
 ```{r}
 ggplot(data = mpg, aes(hwy, cyl)) +
@@ -128,12 +128,12 @@ Just remeber to use `?function_name`.
 
 `facet_wrap` = makes rows, and usually goes like `facet_wrap(~ cat_var)`
 
-We can add `nrow` and `ncol`, `switch` changes where the title of each category goes, could be "x", "y" or "both".
+We can add `nrow` and `ncol`, `strip.position` (which is the version for `switch`) changes where the title of each category goes, could be "right", "left", "bottom", etc..
 
 ```{r}
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy)) + 
-  facet_wrap(~ class, nrow = 4, ncol = 2, switch = "y")
+  facet_wrap(~ class, nrow = 4, ncol = 2, strip.position = "bottom")
 ```
 
 
@@ -147,7 +147,6 @@ ggplot(data = mpg) +
   facet_grid(. ~ class)
 ```
 </div>
-
 <div class = "col-md-6">
 ```{r}
 ggplot(data = mpg) + 
@@ -160,10 +159,215 @@ ggplot(data = mpg) +
 
 
 ## 3.6 Geometric objects
+
+The key concept is that not every geom has the same aesthetics.
+
+For example `geom_smooth` has the "linetype" argument that shows a different line for each `cat_var`.
+
+If I had used the `group` instead of color, I would have had three lines from the same color, and no legend.
+
+```{r}
+mpg %>% 
+  ggplot(aes(x = displ, y = hwy, color = drv)) +
+  geom_smooth(aes(linetype = drv), show.legend = FALSE) +
+  geom_point(show.legend = FALSE, position = "jitter")
+```
+
+The idea is that for each geom, the aes apply to each layer.
+
+```{r}
+mpg %>% 
+  ggplot(aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color = class), show.legend = TRUE) + 
+  geom_smooth(data = filter(mpg, class == "subcompact"), se = TRUE) +
+  geom_smooth(data = filter(mpg, class == "suv"), se = TRUE)
+  
+```
+
+A line chart?
+
+```{r}
+mpg %>% 
+  ggplot(aes(x = displ, y = hwy, color =  class)) + 
+  geom_line() +
+  facet_wrap(. ~ class)
+
+```
+
+Some graphs
+
+<div class = "row">
+<div class = "col-md-6">
+```{r}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point(size = 3) +
+  geom_smooth(se = FALSE, size = 3)
+```
+</div>
+<div class = "col-md-6">
+```{r}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_smooth(aes(group =  drv), se = FALSE, size = 2 ) +
+  geom_point(size = 3)
+```
+</div>
+</div>
+
+<div class = "row">
+<div class = "col-md-6">
+```{r}
+mpg %>% 
+  ggplot(aes(displ, hwy, color = drv)) +
+  geom_smooth(se = FALSE, size = 2 ) +
+  geom_point(size = 3)
+```
+</div>
+</div class = "col-md-6">
+```{r}
+mpg %>% 
+  ggplot(aes(displ, hwy)) +
+  geom_point(aes(color = drv),size = 3, show.legend = FALSE) +
+  geom_smooth(se = FALSE, size = 2 )
+```
+</div>
+</div>
+
+
 ## 3.7 Statistical transformations
+
+Geom_bar and stat_count are very similar. By default `geom_bar` has as an argument `stat = "count"`, that if we change by "identity", is going to look different.
+
+</div class = "row">
+</div class = "col-md-3">
+```{r}
+diamonds %>% 
+  ggplot(aes(x = cut)) +
+  geom_bar(aes(y = ..prop.., group = 1), show.legend = FALSE)
+```
+</div>
+<div class = "col-md-3">
+```{r}
+diamonds %>% 
+  ggplot(aes(x = cut, fill = clarity)) +
+  geom_bar()
+```
+</div>
+<div class = "col-md-3">
+```{r}
+diamonds %>%
+  count(cut) %>% 
+  ggplot(aes(x = cut, y  = n)) +
+  geom_bar(stat = "identity")
+```
+</div>
+<div class = "col-md-3">
+```{r}
+diamonds %>% 
+  ggplot(aes(x = cut)) +
+  stat_count()
+```
+</div>
+</div>
+
+
+Now `stat_summary` could save me lots of trouble
+Please notice that stat_summary has `show.legend`
+```{r}
+diamonds %>%
+  ggplot() +
+  stat_summary(
+    aes(x = cut, y = depth, color = cut),
+    fun.y = median,
+    fun.ymax = max,
+    fun.ymin = min,
+    show.legend = FALSE) +
+  coord_flip()
+```
+
+`fun.data` crea un df con la media y ds
+Otra para revisar que esta buena es esta para lineranges, que seria trazar lineas y puntos con la min y max, se, etc.
+https://ggplot2.tidyverse.org/reference/geom_linerange.html
+
+
 ## 3.8 Position adjustments
+In barcharts, if we use in the `fill` (or `color`) argument a different `cat_var`, we get a "stacked" look.
+We can change this with the argument `position` that use 3 options: "identity", "dodge", "fill".
+
+</div class = "row">
+</div class = "col-md-3">
+```{r}
+diamonds %>% 
+  ggplot(aes(x = cut, fill = clarity)) +
+  geom_bar()
+```
+</div>
+</div class = "col-md-3">
+```{r}
+diamonds %>% 
+  ggplot(aes(x = cut, color = clarity)) +
+  geom_bar(fill = NA, position = "identity")
+```
+</div>
+</div class = "col-md-3">
+```{r}
+diamonds %>% 
+  ggplot(aes(x = cut, fill = clarity)) +
+  geom_bar(position = "fill")
+```
+</div>
+</div class = "col-md-3">
+```{r}
+diamonds %>% 
+  ggplot(aes(x = cut, fill = clarity)) +
+  geom_bar(position = "dodge")
+```
+</div>
+</div>
+
+
+Exercises have to do with geom_jitter
+
+```{r out.width=c('25%','25%','25%','25%'), fig.show='hold'}
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) + 
+  geom_point(position = "jitter")
+
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) + 
+  geom_jitter()
+
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) + 
+  geom_count()
+
+ggplot(data = mpg, mapping = aes(x = class, y =  cty)) + 
+  geom_boxplot(aes(fill = class)) 
+```
+
 ## 3.9 Coordinate systems
+
+`coord_polar`
+
+```{r}
+diamonds %>% 
+  ggplot(aes(x = cut, fill = cut)) +
+  geom_bar(width = 1, show.legend = FALSE) +
+  coord_polar() +
+  theme(aspect.ratio = 1)
+
+```
+
 ## 3.10 The layered grammar of graphics
 
+
+```{r eval = FALSE}
+ggplot(data = <DATA>) + 
+  <GEOM_FUNCTION>(
+     mapping = aes(<MAPPINGS>),
+     stat = <STAT>, 
+     position = <POSITION>
+  ) +
+  <COORDINATE_FUNCTION> +
+  <FACET_FUNCTION>
+```
 
 
