@@ -269,11 +269,14 @@ diamonds %>%
   stat_count()
 ```
 </div>
+
 </div>
 
 
 Now `stat_summary` could save me lots of trouble
+
 Please notice that stat_summary has `show.legend`
+
 ```{r}
 diamonds %>%
   ggplot() +
@@ -293,6 +296,7 @@ https://ggplot2.tidyverse.org/reference/geom_linerange.html
 
 ## 3.8 Position adjustments
 In barcharts, if we use in the `fill` (or `color`) argument a different `cat_var`, we get a "stacked" look.
+
 We can change this with the argument `position` that use 3 options: "identity", "dodge", "fill".
 
 </div class = "row">
