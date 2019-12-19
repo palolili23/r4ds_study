@@ -4,7 +4,6 @@ author: "Paloma"
 date: "`r Sys.Date()`"
 output: 
   html_document:
-    df_printed: paged
     theme: united
     code_folding: hide
 editor_options: 
@@ -12,7 +11,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, size = 4)
+knitr::opts_chunk$set(echo = TRUE, size = 3)
 library(tidyverse)
 library(kableExtra)
 
@@ -462,7 +461,11 @@ Useful summarise functions:
 
 - `first()`, `nth(x,2)`, `last()`
 
--
+- `n()`, `n_distinct()`, `sum(!is.na(x))`
+
+- `count()`, `count(x, wt = y)`
+
+
 ```{r}
 flights %>% 
   group_by(dest) %>% 
@@ -506,25 +509,36 @@ summary_flights <- flights %>%
 summary_flights %>% 
   head() %>% 
   mytable()
+```
 
+```{r}
 summary_flights %>%
   sample_n(10) %>% 
   ggplot(aes(x = dest, y = median)) +
   geom_bar(aes(fill = dest), stat = "identity") +
   coord_flip() 
 
+```
+
+```{r}
 summary_flights %>%
   sample_n(10) %>% 
   ggplot(aes(x = dest, y = median)) +
   geom_col(aes(fill = dest)) +
   coord_flip() 
 
+```
+
+```{r}
 summary_flights %>% 
   sample_n(5) %>% 
   ggplot(aes(x = dest, y = mean_pos, color = dest)) +
   geom_pointrange(aes(ymin = min, ymax = max)) +
   coord_flip()
 
+```
+
+```{r}
 summary_flights %>% 
   sample_n(5) %>% 
   ggplot(aes(x = dest, y = mean_pos, color = dest)) +
@@ -532,13 +546,80 @@ summary_flights %>%
   geom_errorbar(aes(ymin = min, ymax = max)) +
   coord_flip()
 
-summary_flights %>% 
+```
+
+```{r}
+summary_flights %>%
   sample_n(5) %>% 
   ggplot(aes(x = dest, y = mean_pos)) +
   geom_bar(aes(color = dest), fill = NA, stat = "identity", show.legend = FALSE) +
   geom_pointrange(aes(ymin = min, ymax = max, color = dest)) +
   geom_errorbar(aes(ymin = min, ymax = max, color = dest)) +
-  geom_vline(xintercept = 200, color = "red", size = 3) +
+  geom_hline(yintercept = 0, color = "black", size = 1) +
+  coord_flip()
+
+```
+
+**Calculate proportions**
+
+Where do people go?
+
+```{r}
+flights %>%
+  select(dest) %>% 
+  group_by(dest) %>% 
+  mutate(n_dest = n()) %>% 
+  ungroup() %>% 
+  filter(n_dest > 5000) %>% 
+  count(dest, name = "total") %>% 
+  mutate(prop = round(total/sum(total)*100,2)) %>% 
+  mutate(dest = fct_reorder(dest, prop)) %>% 
+  ggplot(aes(dest, prop, fill = dest)) +
+  geom_col(show.legend = FALSE) +
+  geom_label(
+    aes(label = prop, y = prop), show.legend = FALSE)
+```
+
+**Proportions for a dicotomous cathegory**
+
+```{r}
+flights %>% 
+  summarise(mean(arr_delay < 0, na.rm = TRUE))
+```
+
+```{r}
+flights %>%
+  mutate(
+    arr_cat = case_when(
+      arr_delay < 0 ~ "earlier",
+      arr_delay == 0 ~ "sharp",
+      arr_delay > 0 ~ "late",
+      is.na(arr_delay) ~ "cancelled"
+    )
+  ) %>%
+  count(arr_cat, name = "total") %>%
+  mutate(prop = total / sum(total),
+         total_count = sum(total))
+
+```
+
+```{r}
+flights %>%
+  sample_n(100) %>% 
+  ggplot(aes(dest))+
+  geom_bar(aes(y = ..prop.., group = 1))
+```
+
+```{r}
+flights %>% 
+  sample_n(500) %>% 
+  count(dest, name = "count") %>% 
+  mutate(prop = round(count/sum(count)*100,2),
+         dest = fct_reorder(dest, prop)) %>%
+  filter(prop > 1) %>% 
+  ggplot(aes(dest, prop)) +
+  geom_col(aes(fill=dest)) +
+  geom_label(aes(label = prop, y = prop)) +
   coord_flip()
 ```
 
