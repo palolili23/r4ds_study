@@ -401,8 +401,8 @@ flights %>%
     dep_time_min = (dep_time %% 100),
     dep_time_min = dep_time_min + dep_time_hr
   ) %>%
-  mutate(dep_time_min = ifelse(dep_time == 2400, 0, dep_time_min)) %>% 
-  head() %>% 
+  mutate(dep_time_min = ifelse(dep_time == 2400, 0, dep_time_min)) %>%
+  head() %>%
   mytable()
 ```
 
@@ -410,10 +410,10 @@ flights %>%
 
 ```{r}
 flights %>%
-  sample_n(10000) %>% 
+  sample_n(10000) %>%
   select(air_time, arr_time, dep_time) %>%
-  mutate(arr_dep = arr_time - dep_time) %>% 
-  mutate(equal = air_time == arr_dep) %>% 
+  mutate(arr_dep = arr_time - dep_time) %>%
+  mutate(equal = air_time == arr_dep) %>%
   ggplot(aes(air_time, arr_dep)) +
   geom_point()
 ```
@@ -422,22 +422,22 @@ flights %>%
 
 ```{r}
 flights %>%
-  select(dep_time, sched_dep_time, dep_delay) %>% 
-  head() %>% 
+  select(dep_time, sched_dep_time, dep_delay) %>%
+  head() %>%
   mytable()
 ```
 
 4. Find the 10 most delayed flights using a ranking function. How do you want to handle ties? Carefully read the documentation for min_rank().
 
 ```{r}
-flights %>% 
-  select(origin, carrier, dep_delay) %>% 
-  # arrange(desc(dep_delay)) %>% 
+flights %>%
+  select(origin, carrier, dep_delay) %>%
+  # arrange(desc(dep_delay)) %>%
   mutate(minrank = min_rank(desc(dep_delay)),
          rowrank = row_number(desc(dep_delay)),
-         denserank = dense_rank(desc(dep_delay))) %>% 
-  arrange(desc(dep_delay)) %>% 
-  head() %>% 
+         denserank = dense_rank(desc(dep_delay))) %>%
+  arrange(desc(dep_delay)) %>%
+  head() %>%
   mytable()
 ```
 
@@ -467,34 +467,34 @@ Useful summarise functions:
 
 
 ```{r}
-flights %>% 
-  group_by(dest) %>% 
+flights %>%
+  group_by(dest) %>%
   summarise(
     count = n(),
     mean_delay = mean(arr_delay, na.rm = TRUE),
     mean_dist = mean(distance, na.rm = TRUE)) %>%
-  filter(mean_dist <3000) %>% 
+  filter(mean_dist <3000) %>%
   ggplot(aes(mean_dist, mean_delay)) +
   geom_point(aes(size = count), alpha = 0.5) +
   geom_smooth()
 ```
 
 ```{r}
-flights %>% 
-  group_by(tailnum) %>% 
+flights %>%
+  group_by(tailnum) %>%
   summarize(
     count = n(),
-    mean_delay = mean(arr_delay, na.rm = TRUE)) %>% 
-  filter(between(count, 25, 500)) %>% 
+    mean_delay = mean(arr_delay, na.rm = TRUE)) %>%
+  filter(between(count, 25, 500)) %>%
   ggplot(aes(count, mean_delay)) +
   geom_point(alpha = 0.5, position = "jitter")
 ```
 
 ```{r}
-summary_flights <- flights %>% 
-  select(dest, arr_delay) %>% 
-  filter(!is.na(arr_delay)) %>% 
-  group_by(dest) %>% 
+summary_flights <- flights %>%
+  select(dest, arr_delay) %>%
+  filter(!is.na(arr_delay)) %>%
+  group_by(dest) %>%
   summarize(mean = mean(arr_delay),
             mean_pos = mean(arr_delay[arr_delay > 0]),
             median = median(arr_delay),
@@ -506,32 +506,32 @@ summary_flights <- flights %>%
             max = max(arr_delay),
             first = first(arr_delay),
             last = last(arr_delay))
-summary_flights %>% 
-  head() %>% 
+summary_flights %>%
+  head() %>%
   mytable()
 ```
 
 ```{r}
 summary_flights %>%
-  sample_n(10) %>% 
+  sample_n(10) %>%
   ggplot(aes(x = dest, y = median)) +
   geom_bar(aes(fill = dest), stat = "identity") +
-  coord_flip() 
+  coord_flip()
 
 ```
 
 ```{r}
 summary_flights %>%
-  sample_n(10) %>% 
+  sample_n(10) %>%
   ggplot(aes(x = dest, y = median)) +
   geom_col(aes(fill = dest)) +
-  coord_flip() 
+  coord_flip()
 
 ```
 
 ```{r}
-summary_flights %>% 
-  sample_n(5) %>% 
+summary_flights %>%
+  sample_n(5) %>%
   ggplot(aes(x = dest, y = mean_pos, color = dest)) +
   geom_pointrange(aes(ymin = min, ymax = max)) +
   coord_flip()
@@ -539,8 +539,8 @@ summary_flights %>%
 ```
 
 ```{r}
-summary_flights %>% 
-  sample_n(5) %>% 
+summary_flights %>%
+  sample_n(5) %>%
   ggplot(aes(x = dest, y = mean_pos, color = dest)) +
   geom_pointrange(aes(ymin = min, ymax = max)) +
   geom_errorbar(aes(ymin = min, ymax = max)) +
@@ -550,7 +550,7 @@ summary_flights %>%
 
 ```{r}
 summary_flights %>%
-  sample_n(5) %>% 
+  sample_n(5) %>%
   ggplot(aes(x = dest, y = mean_pos)) +
   geom_bar(aes(color = dest), fill = NA, stat = "identity", show.legend = FALSE) +
   geom_pointrange(aes(ymin = min, ymax = max, color = dest)) +
@@ -566,14 +566,13 @@ Where do people go?
 
 ```{r}
 flights %>%
-  select(dest) %>% 
-  group_by(dest) %>% 
-  mutate(n_dest = n()) %>% 
-  ungroup() %>% 
-  filter(n_dest > 5000) %>% 
-  count(dest, name = "total") %>% 
-  mutate(prop = round(total/sum(total)*100,2)) %>% 
-  mutate(dest = fct_reorder(dest, prop)) %>% 
+  select(dest) %>%
+  group_by(dest) %>%
+  filter(n() > 5000) %>%
+  ungroup() %>%
+  count(dest, name = "total") %>%
+  mutate(prop = round(total/sum(total)*100,2)) %>%
+  mutate(dest = fct_reorder(dest, prop)) %>%
   ggplot(aes(dest, prop, fill = dest)) +
   geom_col(show.legend = FALSE) +
   geom_label(
@@ -583,7 +582,7 @@ flights %>%
 **Proportions for a dicotomous cathegory**
 
 ```{r}
-flights %>% 
+flights %>%
   summarise(mean(arr_delay < 0, na.rm = TRUE))
 ```
 
@@ -605,29 +604,87 @@ flights %>%
 
 ```{r}
 flights %>%
-  sample_n(100) %>% 
+  sample_n(10) %>%
   ggplot(aes(dest))+
   geom_bar(aes(y = ..prop.., group = 1))
 ```
 
 ```{r}
-flights %>% 
-  sample_n(500) %>% 
+flights %>%
+  sample_n(500) %>%
   count(dest, name = "count") %>% 
+  sample_n(10) %>% 
   mutate(prop = round(count/sum(count)*100,2),
          dest = fct_reorder(dest, prop)) %>%
-  filter(prop > 1) %>% 
+  filter(prop > 1) %>%
   ggplot(aes(dest, prop)) +
   geom_col(aes(fill=dest)) +
-  geom_label(aes(label = prop, y = prop)) +
+  # geom_label(aes(label = prop, y = prop)) +
   coord_flip()
 ```
 
-## 5.7 Grouped mutates (and filters)
+
+## Tips based on exercises
+
+**How other functions change with grouping**
+
+Summary functions `(mean())`, offset functions `(lead(), lag())`, ranking functions `(min_rank(), row_number())`, operate within each group when used with `group_by()` in `mutate()` or `filter()`. Arithmetic operators `(+, -)`, logical operators `(<, ==)`, modular arithmetic operators `(%%, %/%)`, logarithmic functions `(log)` are **not** affected by `group_by`.
 
 
+What time of day should you fly if you want to avoid delays as much as possible?
 
+```{r}
+flights %>%
+  filter(arr_delay < 100) %>%
+  ggplot(aes(as_factor(hour), arr_delay)) +
+  geom_boxplot() +
+  geom_hline(yintercept = 0, color = "red")
 
+flights %>%
+  group_by(hour) %>%
+  summarise(
+    count_flights = n(),
+    mean = mean(arr_delay, na.rm = TRUE),
+    quant = quantile(arr_delay, 0.95, na.rm = TRUE)
+  ) %>%
+  ungroup() %>%
+  filter(hour != 1) %>%
+  sample_n(10) %>%
+  ggplot(aes(hour, mean, size = count_flights)) +
+  geom_point()
 
+```
 
+For each destination, compute the total minutes of delay. For each flight, compute the proportion of the total delay for its destination.
+
+```{r}
+flights %>%
+  group_by(dest) %>%
+  mutate(total_min_delay = sum(abs(arr_delay), na.rm = TRUE) + sum(abs(dep_delay), na.rm = TRUE),
+         prop_delay = 100*(abs(arr_delay) + abs(dep_delay)) /total_min_delay
+            ) %>%
+  arrange(prop_delay) %>%
+  ungroup() %>%
+  arrange(dest) %>%
+  select(dest, prop_delay, total_min_delay) %>%
+  slice(1:10) %>%
+  mytable()
+```
+
+For each plane, count the number of flights before the first delay of greater than 1 hour
+
+```{r}
+flights %>%
+  select(tailnum, year, month, day, dep_delay) %>%
+  mutate(dep_delay_hr = dep_delay / 60,
+         dep_delay_hr = ifelse(dep_delay_hr < 0, 0 , dep_delay_hr)) %>%
+  arrange(tailnum, year, month, day) %>%
+  group_by(tailnum) %>%
+  mutate(less_1 = cumsum(dep_delay_hr),
+         number = row_number()) %>%
+  filter(less_1 < 1) %>%
+  slice(last(number))  %>%
+  head() %>%
+  mytable()
+```
 

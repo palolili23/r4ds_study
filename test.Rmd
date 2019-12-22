@@ -1,0 +1,41 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r setup, include = FALSE, error= FALSE}
+library(tidyverse)
+library(lubridate)
+
+```
+
+```{r lectura}
+partidos <- readr::read_delim("https://raw.githubusercontent.com/cienciadedatos/datos-de-miercoles/master/datos/2019/2019-04-10/partidos.txt",delim = "\t")
+```
+
+```{r summary}
+summary(partidos)
+
+```
+
+1. cuantos partidos se jugaron en cada ciudad (con color por anio)
+
+```{r totalxciudad}
+totalxciudad <- partidos %>%
+  # mutate(ciudad = str_trunc(ciudad, 6)) %>% 
+  group_by(ciudad, anio) %>% 
+  summarise(cuenta = n()) %>% 
+  ungroup()
+```
+
+```{r}
+totalxciudad %>% 
+  sample_n(10) %>% 
+  ggplot(aes(x = ciudad, y = cuenta)) +
+  geom_col()
+
+```
