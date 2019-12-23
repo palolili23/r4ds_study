@@ -203,6 +203,8 @@ diamonds %>%
 
 ```
 
+## Exercise
+
 Combine two of the techniques you’ve learned to visualize the combined distribution of cut, carat, and price.
 
 
