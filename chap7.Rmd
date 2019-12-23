@@ -20,6 +20,8 @@ mytable <- function(df){
   kable_styling(bootstrap_options = c("hover", "condensed", "responsive"),
                 full_width = F,
                 font_size = 12)}
+
+library(wesanderson)
 ```
 
 # Exploratory Data Analysis
@@ -113,12 +115,138 @@ ggplot(data = diamonds) +
 
 ```{r}
 diamonds %>% 
-  count(color, cut) %>%  
-  ggplot(mapping = aes(x = color, y = cut)) +
-    geom_tile(mapping = aes(fill = n))
+  count(color, cut) %>%
+  ggplot(aes(color, cut)) +
+  geom_tile(aes(fill = n))
+```
+
+1. How could you rescale the count dataset above to more clearly show the distribution of cut within colour, or colour within cut?
+
+```{r}
+diamonds %>% 
+  group_by(color) %>%
+  count(cut) %>% 
+  mutate(total = sum(n),
+         prop = round(n/total,2)) %>% 
+  ggplot(aes(color, cut)) +
+  geom_tile(aes(fill = prop))
+```
+
+2. Use geom_tile() together with dplyr to explore how average flight delays vary by destination and month of year. What makes the plot difficult to read? How could you improve it?
+
+```{r}
+destinations <- nycflights13::flights %>% 
+  count(dest) %>% 
+  sample_n(12) %>% 
+  pull(dest)
+
+nycflights13::flights %>%
+  filter(dest %in% destinations) %>% 
+  mutate(month = as_factor(month)) %>% 
+  group_by(dest, month) %>% 
+  summarise(mean_delay = round(mean(arr_delay, na.rm = TRUE),2)) %>% 
+  ungroup() %>% 
+  mutate(dest = fct_reorder(dest, mean_delay)) %>% 
+  ggplot(aes(month, dest)) +
+  geom_tile(aes(fill = mean_delay))
+```
+
+## Two continuous
+
+- `geom_point`: is usefull, but if the amount of points is large, `alpha` should be used.
+
+- `geom_bin2d()`: makes tiles and fills for count of points
+
+- `geom_hex()`: makes hexagons and fills for count of points
+
+- `cut_width()`: we choose the width, so number of bins is calculated automatically.
+
+- `cut_number()`: split a variable into groups, we specify number of bins and widths are calculated automatically.
+
+```{r}
+library(hexbin)
+
+diamonds %>%
+  sample_n(1000) %>%
+  ggplot(aes(carat, price)) +
+  geom_bin2d() +
+  labs(title = "`geom_bin2d`")
+```
+
+```{r}
+diamonds %>%
+  sample_n(1000) %>%
+  ggplot(aes(carat, price)) +
+  geom_hex() +
+  labs(title = "`geom_hex`")
+```
+
+
+```{r}
+diamonds %>%
+  select(price) %>%
+  mutate(price_quintile = cut_number(price, 5)) %>%
+  ggplot(aes(x = price_quintile, y = price)) +
+  geom_boxplot() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  labs(title = "`cut_number`")
+```
+
+```{r}
+diamonds %>%
+  select(price, carat) %>%
+  mutate(price_width = cut_width(price, 2500)) %>%
+  ggplot(aes(price_width, carat)) +
+  geom_violin() +
+  coord_flip() +
+  labs(title = "`cut_width`")
+
+```
+
+Combine two of the techniques you’ve learned to visualize the combined distribution of cut, carat, and price.
+
+
+```{r}
+diamonds %>%
+  sample_n(500) %>%
+  select(cut, carat, price) %>%
+  mutate(price = cut_number(price, 5),
+         carat = cut_number(carat, 3)) %>%
+  ggplot(aes(price, fill = cut)) +
+  geom_bar() +
+  facet_wrap(.~ carat) +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+```{r}
+diamonds %>%
+  sample_n(500) %>%
+  select(cut, carat, price) %>%
+  ggplot(aes(carat, log2(price))) +
+  geom_point(aes(color = cut), alpha = 0.7) +
+  geom_smooth(aes(color = cut), se = FALSE, show.legend = FALSE)
+
+
+```
+
+```{r}
+diamonds %>%
+  sample_n(500) %>%
+  select(cut, carat, price) %>%
+  mutate(carat = cut_number(carat, 3)) %>%
+  ggplot(aes(carat, price, color = cut)) +
+  geom_boxplot()
 ```
 
 ## Patterns and models
 
-## ggplot2 calls
+- Could this pattern be due to coincidence (i.e. random chance)?
+
+- How can you describe the relationship implied by the pattern?
+
+- How strong is the relationship implied by the pattern?
+
+- What other variables might affect the relationship?
+
+- Does the relationship change if you look at individual subgroups of the data?
 
