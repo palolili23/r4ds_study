@@ -102,7 +102,7 @@ diamonds %>%
   geom_boxplot()
 ```
 
-## Two categorical
+### Two categorical
 
 - `geom_count`
 
@@ -151,7 +151,7 @@ nycflights13::flights %>%
   geom_tile(aes(fill = mean_delay))
 ```
 
-## Two continuous
+### Two continuous
 
 - `geom_point`: is usefull, but if the amount of points is large, `alpha` should be used.
 
