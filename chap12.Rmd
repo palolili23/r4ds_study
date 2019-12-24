@@ -5,7 +5,6 @@ date: "`r Sys.Date()`"
 output: 
   html_document:
     theme: united
-    code_folding: hide
 editor_options: 
   chunk_output_type: console
 ---
@@ -24,9 +23,94 @@ mytable <- function(df){
 
 ## The rules of Tidy data
 
-1. **Each variable must have its own column**
+1. Each **variable** must have its own **column**
 
-2. **Each observation must have its own row**
+2. Each **observation** must have its own **row**
 
-3. **Each value must have its own cell**
+3. Each **value** must have its own **cell**
+
+## `Pivot_longer()`
+
+- First select the variables
+
+- `names_to` creates the column for the names of the variables. Name is in quoted.
+
+- `values_to` creates the column for the values contained in the columns. Name is in quoted.
+
+- When more there is more than one column that needs to be created, let say repeated measurements for x and y (x1,x2,y1,y2), than we only use `names_to = c(".value", "time")` (so we have a variable "x" and a variable "y"), plus the variable "time" for 1 and 2 
+
+- To detect what will be the name of the variables (x, y) from the piece of information that will stay in the variable "time" (1:2) We need to include as an argument either: 
+
+  + `names_pattern`: similar to `extract`, a regex containing matching groups `()`.
+  
+  + `names_sep`: as `separate`, can be regex or a numeric vector specifying where to separate.
+
+```{r}
+table4a %>% mytable()
+```
+
+```{r}
+table4a %>% 
+  pivot_longer(-1,
+               names_to = "year",
+               values_to = "cases") %>% 
+  mytable()
+```
+
+```{r}
+table1 %>% mytable()
+
+table1 %>%
+  pivot_longer(-c(1,2),
+               names_to = "measurement",
+               values_to = "count") %>% 
+  mytable()
+```
+
+```{r}
+tidyr::billboard %>%
+  select(1:8) %>%
+  head() %>%
+  mytable()
+```
+
+```{r}
+billboard %>%
+  pivot_longer(
+    cols = starts_with("wk"),
+    names_to = "week",
+    names_prefix = "wk",
+    values_to = "rank",
+    values_drop_na = TRUE
+  ) %>%
+  head() %>%
+  mytable()
+```
+
+```{r}
+ex <- tibble(
+  id = c(1:7),
+  x1 = c(-3:3),
+  x2 = c(4:10),
+  y1 = c(-4:2),
+  y2 = c(rep(2, 4), rep(3,3))
+)
+```
+
+```{r}
+ex %>%
+pivot_longer(-1,
+             names_to = c(".value", "measure"),
+             names_pattern = "(.)(.)")  %>%
+  head()  %>%
+  mytable()
+
+ex %>%
+pivot_longer(-1,
+             names_to = c(".value", "measure"),
+             names_sep = -1)  %>%
+  head()  %>%
+  mytable()
+```
+
 

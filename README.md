@@ -19,6 +19,6 @@ It has some resolved exercises as well as some tests on additional functions tha
     Import](https://palolili23.github.io/r4ds_study/chap10-11.html)
 
   - [Chapter 12: Tidy
-    data](https://palolili23.github.io/r4ds_study/12.html)
+    data](https://palolili23.github.io/r4ds_study/chap12.html)
     
     [Presentation](https://palolili23.github.io/chap12/#1)
