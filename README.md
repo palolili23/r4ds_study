@@ -22,3 +22,5 @@ It has some resolved exercises as well as some tests on additional functions tha
     data](https://palolili23.github.io/r4ds_study/chap12.html)
     
     [Presentation](https://palolili23.github.io/chap12/#1)
+
+  - [Chapter 13: Relational data](https://palolili23.github.io/r4ds_study/chap13.html)
