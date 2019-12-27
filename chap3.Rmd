@@ -4,15 +4,16 @@ author: "Paloma"
 date: "11/28/2019"
 output: 
   html_document:
-    df_printed: paged
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 3
     theme: united
-    code_folding: hide
 editor_options: 
   chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
@@ -269,7 +270,6 @@ diamonds %>%
   stat_count()
 ```
 </div>
-
 </div>
 
 
