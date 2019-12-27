@@ -4,8 +4,10 @@ author: "Paloma"
 date: "`r Sys.Date()`"
 output: 
   html_document:
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 3
     theme: united
-    code_folding: hide
 editor_options: 
   chunk_output_type: console
 ---
