@@ -469,13 +469,32 @@ who_tidy%>%
 
 ```{r}
 who_tidy%>% 
+  filter(year >= 1995) %>% 
   group_by(country, year, sex) %>% 
   summarise(count = sum(value)) %>% 
   ungroup() %>% 
-  filter(year >= 1995) %>% 
+  group_by(country) %>% 
+  mutate(total = sum(count)) %>% 
+  ungroup() %>% 
+  filter(total > 500000) %>% 
   ggplot(aes(year, log(count), color = country)) +
   geom_line(show.legend = FALSE) +
   geom_smooth(aes(color = sex), show.legend = FALSE) +
   facet_grid(~sex)
+```
+
+```{r}
+who_tidy%>% 
+  filter(year >= 1995) %>% 
+  group_by(country, year, sex) %>% 
+  summarise(count = sum(value)) %>% 
+  ungroup() %>% 
+  group_by(country) %>% 
+  mutate(total = sum(count)) %>% 
+  ungroup() %>% 
+  filter(total > 500000) %>% 
+  ggplot(aes(year, log(count), color = sex)) +
+  geom_line(show.legend = FALSE) +
+  facet_wrap(~country)
 ```
 
