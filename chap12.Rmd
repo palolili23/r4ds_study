@@ -4,6 +4,9 @@ author: "Paloma"
 date: "`r Sys.Date()`"
 output: 
   html_document:
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 3
     theme: united
 editor_options: 
   chunk_output_type: console
@@ -442,8 +445,7 @@ who_tidy <- who %>%
 
 For each country, year, and sex compute the total number of cases of TB. Make an informative visualisation of the data.
 
-```{r}
-library(RColorBrewer)
+```{r, fig.width= 8}
 
 who_tidy%>% 
   filter(year >= 1995) %>% 
