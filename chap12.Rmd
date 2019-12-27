@@ -171,6 +171,12 @@ test %>%
     names_pattern = "(.)(.)$") %>% 
   mytable()
 
+test %>% 
+  pivot_longer(- id,
+    names_to = c("apellido", "tiempo", "test", "test2"),
+    values_to = "count",
+    names_pattern = "([a-z]+)_([0-9]+)_(.)(.)") %>% 
+  mytable()
 ```
 
 ### `Pivot_wider()`
@@ -249,5 +255,225 @@ ex_long %>%
     names_sep = ""
   ) %>% mytable()
 
+```
+
+
+## Other useful functions from `tidyr()` {.tabset}
+
+### Separate
+
+We use the argument `into` and include the new columns in a vector, with quoted names.
+
+```{r}
+table3 %>% 
+  mytable()
+
+table3 %>%
+  separate(rate, into = c("cases", "population")) %>% 
+  mytable()
+```
+
+```{r}
+stocks <- tibble(
+  year   = c("year1", "year2", "year1", "year2"),
+  half  = c(   1,    2,     1,    2),
+  return = c(1.88, 0.59, 0.92, 0.17)
+  )
+stocks %>% mytable()
+
+stocks %>% 
+  separate(year, into = c("text", "time"),
+           sep = -1,
+           remove = FALSE) %>% 
+  mytable()
+
+stocks %>% 
+  separate(year, into = c(NA, "time"),
+           sep = -1) %>% 
+  mytable()
+```
+
+```{r}
+df <- data.frame(x = c(NA, "a?b", "a.d", "b:c"))
+
+df %>% separate(x, c("A","B"), sep = "([.?:])")
+```
+
+
+```{r}
+tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>% 
+  separate(x, c("one", "two", "three") )
+
+tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>% 
+  separate(x, c("one", "two", "three"), extra = "merge")
+
+tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>% 
+  separate(x, c("one", "two", "three"), extra = "drop")
+
+```
+
+
+```{r}
+tibble(x = c("a,b,c", "d,e", "f,g,i")) %>% 
+  separate(x, c("one", "two", "three"))
+
+tibble(x = c("a,b,c", "d,e", "f,g,i")) %>% 
+  separate(x, c("one", "two", "three"), fill = "left")
+
+tibble(x = c("a,b,c", "d,e", "f,g,i")) %>% 
+  separate(x, c("one", "two", "three"), fill = "right")
+```
+
+### Extract
+
+```{r}
+tibble(x = c("a,b,c", "d,e", "f,g,i")) %>% 
+  extract(x, into = c("one","two", "three"),
+          regex = "(.),(.),(.)")
+```
+
+```{r}
+tibble(x = c("X_1", "X_2", "AA_1", "AA_2")) %>%
+  extract(x, c("variable", "id"), regex = "([A-Z]+)_([0-9]+)")
+```
+
+```{r}
+tibble(x = c("X1", "X20", "AA11", "AA2")) %>%
+  extract(x, c("variable", "id"), regex = "([A-Z]+)([0-9]+)")
+```
+
+### Unite
+
+We only need to name the new column, unquoted, followed by the variables to unite, unquoted as well.
+
+```{r}
+table1 %>% 
+  unite(rate, cases, population,
+        sep = "/",
+        remove = FALSE)
+```
+
+### Missing values
+
+- **Implicit**: Not present in the data
+
+- **Explicit**: As `NA`
+
+```{r}
+stocks <- tibble(
+  year   = c(2015, 2015, 2015, 2015, 2016, 2016, 2016),
+  qtr    = c(   1,    2,    3,    4,    2,    3,    4),
+  return = c(1.88, 0.59, 0.35,   NA, 0.92, 0.17, 2.66)
+)
+
+stocks %>% mytable()
+```
+
+```{r}
+stocks_wide <- stocks %>% 
+  pivot_wider(names_from = year,
+              values_from = return) 
+
+stocks_wide %>% 
+  mytable() 
+```
+
+```{r}
+stock_long <- stocks_wide %>% 
+  pivot_longer(-1,
+               names_to = "year",
+               values_to = "return") 
+
+stock_long %>% 
+  mytable()
+```
+
+#### Complete
+
+Makes **implicit** values **explicit**
+
+```{r}
+stocks %>% 
+  complete(qtr, year)
+```
+
+```{r}
+df <- tibble(
+  group = c(1:2, 1),
+  item_id = c(1:2, 2),
+  item_name = c("a", "b", "b"),
+  value1 = 1:3,
+  value2 = 4:6
+)
+
+df %>% mytable()
+
+df %>% 
+  complete(group, item_id) %>% mytable()
+
+df %>% 
+  complete(group, item_id, item_name) %>% mytable()
+
+df %>% 
+  complete(group, nesting(item_id, item_name)) %>% mytable()
+
+df %>% 
+  complete(group, nesting(item_id, item_name), fill = list(value1 = 0)) %>% mytable()
+
+df %>% 
+  complete(group, nesting(item_id, item_name)) %>% 
+  fill(c("value1", "value2"), .direction = "up" ) %>% 
+  mytable()
+
+```
+
+## Exercises
+```{r}
+who_tidy <- who %>%
+  pivot_longer(new_sp_m014:newrel_f65,
+               names_to = "key",
+               values_to = "value",
+               values_drop_na = TRUE) %>% 
+  mutate(key = stringr::str_replace(key, "newrel", "new_rel")) %>%
+  separate(key, c("new", "var", "sexage")) %>% 
+  select(-new, -iso2, -iso3) %>% 
+  separate(sexage, c("sex", "age"), sep = 1)
+```
+
+For each country, year, and sex compute the total number of cases of TB. Make an informative visualisation of the data.
+
+```{r}
+library(RColorBrewer)
+
+who_tidy%>% 
+  filter(year >= 1995) %>% 
+  group_by(country, year, sex) %>% 
+  summarise(count = sum(value)) %>% 
+  ungroup() %>% 
+  group_by(country) %>% 
+  mutate(total = sum(count),
+         prop = (count / total)*100) %>% 
+  ungroup() %>% 
+  filter(between(total, quantile(total, 0.95), quantile(total, 1))) %>% 
+  mutate(country = fct_rev(fct_reorder(country, total))) %>%
+  mutate(count = ifelse(sex == "f", count* -1, count)) %>% 
+  mutate(prop = ifelse(sex == "f", prop* -1, prop)) %>% 
+  ggplot(aes(country, count, fill = as_factor(year))) +
+  geom_col() +
+  ggpol::facet_share(~sex, reverse_num = TRUE, scales = "free") +
+  coord_flip() +
+  theme_minimal()
+```
+
+```{r}
+who_tidy%>% 
+  group_by(country, year, sex) %>% 
+  summarise(count = sum(value)) %>% 
+  ungroup() %>% 
+  filter(year >= 1995) %>% 
+  ggplot(aes(year, log(count), color = country)) +
+  geom_line(show.legend = FALSE) +
+  geom_smooth(aes(color = sex), show.legend = FALSE) +
+  facet_grid(~sex)
 ```
 
