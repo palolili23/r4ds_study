@@ -69,7 +69,7 @@ writeLines(backlash)
 
 ## Stringr 
 
-### Funciones básicas
+### Funciones básicas{.tabset}
 
 #### Largo de cadenas: str_length()
 
@@ -145,7 +145,8 @@ str_to_title("helado de canela")
 ```
 
 
-#### Ejercicios
+**Ejercicios**
+
 En ejemplos de código en los que no se utiliza stringr, verás usualmente paste() y paste0() (paste = pegar). ¿Cuál es la diferencia entre estas dos funciones? ¿A qué función de stringr son equivalentes? ¿Cómo difieren estas dos funciones respecto de su manejo de los NA?
 
 Describe con tus propias palabras la diferencia entre los argumentos sep y collapse de la función str_c().
@@ -158,7 +159,9 @@ Utiliza str_length() y str_sub() para extraer el caracter del medio de una caden
 
 Escribe una función que convierta, por ejemplo, el vector c("a", "b", "c") en la cadena a, b, y c. Piensa con detención qué debería hacer dado un vector de largo 0, 1, o 2.
 
-### Funciones en base a patrones y regex
+### Funciones en base a patrones y regex{.tabset}
+
+#### Coincidencias y anclas
 
 - El puntito se refiere a cualquier caracter
 
@@ -219,7 +222,7 @@ Dado el corpus de palabras comunes en datos::palabras, crea una expresión regul
 - Tengan siete letras o más.
 
 ```{r}
-plbrs <- as_tibble(datos::palabras)
+plbrs <- enframe(datos::palabras)
 
 plbrs %>% 
   filter(str_detect(value, "^y"))
@@ -246,4 +249,57 @@ plbrs %>%
 - `[abc]`: coincide con a, b o c
 
 - `[^abc]`: coincide con todo menos a,b o c
+
+- Los caracteres que necesitan barras invertidas para escapar son `]`, `\`, `^`, `-`.
+
+- Se puede usar para disyuntivos `|`
+
+```{r}
+str_view(c("cómo", "como"), "(ó|o)")
+```
+
+Crea una expresión regular que encuentre todas las palabras que:
+
+- Empiecen con una vocal.
+
+```{r}
+plbrs %>% 
+  filter(str_detect(value, "^[aeiou]"))
+```
+
+- Solo contengan consonantes. (Pista: piensa en cómo buscar coincidencias para “no”-vocales.)
+
+```{r}
+plbrs %>% 
+  filter(str_detect(value, "^[^aeiou]+$")) %>% 
+  head()
+```
+
+- Terminen en ón, pero no en ión.
+
+```{r}
+plbrs %>% 
+  filter(str_detect(value, "[^ión]ón$"))
+```
+
+- Terminen con ndo or ado.
+
+```{r}
+plbrs %>% 
+  filter(str_detect(value, "ndo$|ado$"))
+
+plbrs %>% 
+  filter(str_detect(value, "(n|a)do$"))
+
+```
+
+- ¿Siempre a una “q” la sigue una “u”?
+
+Escribe una expresión regular que permita buscar un verbo que haya sido escrito usando voseo en segunda persona plural
+(por ejemplo, queréis en vez de quieren).
+
+Crea una expresión regular que coincida con la forma en que habitualmente se escriben los números de teléfono en tu país.
+
+En inglés existe una regla que dice que la letra i va siempre antes de la e, excepto cuando está después de una c". Verifica empíricamente esta regla utilizando las palabras contenidas en stringr::words.
+
 

@@ -2488,7 +2488,7 @@ comilla_simple</code></pre>
 </div>
 <div id="stringr" class="section level2">
 <h2>Stringr</h2>
-<div id="funciones-básicas" class="section level3">
+<div id="funciones-básicas" class="section level3 tabset">
 <h3>Funciones básicas</h3>
 <div id="largo-de-cadenas-str_length" class="section level4">
 <h4>Largo de cadenas: str_length()</h4>
@@ -2565,9 +2565,7 @@ helados %&gt;%
 <pre><code>## [1] &quot;CHOCOLATE&quot; &quot;FRUTILLA&quot;</code></pre>
 <pre class="r"><code>str_to_title(&quot;helado de canela&quot;)</code></pre>
 <pre><code>## [1] &quot;Helado De Canela&quot;</code></pre>
-</div>
-<div id="ejercicios" class="section level4">
-<h4>Ejercicios</h4>
+<p><strong>Ejercicios</strong></p>
 <p>En ejemplos de código en los que no se utiliza stringr, verás usualmente paste() y paste0() (paste = pegar). ¿Cuál es la diferencia entre estas dos funciones? ¿A qué función de stringr son equivalentes? ¿Cómo difieren estas dos funciones respecto de su manejo de los NA?</p>
 <p>Describe con tus propias palabras la diferencia entre los argumentos sep y collapse de la función str_c().</p>
 <p>Utiliza str_length() y str_sub() para extraer el caracter del medio de una cadena. ¿Qué harías si el número de caracteres es par?</p>
@@ -2576,8 +2574,10 @@ helados %&gt;%
 <p>Escribe una función que convierta, por ejemplo, el vector c(“a”, “b”, “c”) en la cadena a, b, y c. Piensa con detención qué debería hacer dado un vector de largo 0, 1, o 2.</p>
 </div>
 </div>
-<div id="funciones-en-base-a-patrones-y-regex" class="section level3">
+<div id="funciones-en-base-a-patrones-y-regex" class="section level3 tabset">
 <h3>Funciones en base a patrones y regex</h3>
+<div id="coincidencias-y-anclas" class="section level4">
+<h4>Coincidencias y anclas</h4>
 <ul>
 <li><p>El puntito se refiere a cualquier caracter</p></li>
 <li><p>Anclas son <code>^</code> para empieza con, y <code>$</code> termina con.</p></li>
@@ -2585,37 +2585,37 @@ helados %&gt;%
 <pre class="r"><code>fruta</code></pre>
 <pre><code>## [1] &quot;banana&quot;    &quot;kiwi&quot;      &quot;Chirimoya&quot; &quot;arándano&quot;  NA</code></pre>
 <pre class="r"><code>str_view(fruta, &quot;a&quot;)</code></pre>
-<div id="htmlwidget-4340a11ecdb66fe08538" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4340a11ecdb66fe08538">{"x":{"html":"<ul>\n  <li>b<span class='match'>a<\/span>nana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoy<span class='match'>a<\/span><\/li>\n  <li><span class='match'>a<\/span>rándano<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-32f666b3b524811de06e" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-32f666b3b524811de06e">{"x":{"html":"<ul>\n  <li>b<span class='match'>a<\/span>nana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoy<span class='match'>a<\/span><\/li>\n  <li><span class='match'>a<\/span>rándano<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(fruta, &quot;.a&quot;)</code></pre>
-<div id="htmlwidget-3cace0e36ac5fb9906b2" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3cace0e36ac5fb9906b2">{"x":{"html":"<ul>\n  <li><span class='match'>ba<\/span>nana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimo<span class='match'>ya<\/span><\/li>\n  <li>arán<span class='match'>da<\/span>no<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-8a13b655d2bb456fbc4a" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8a13b655d2bb456fbc4a">{"x":{"html":"<ul>\n  <li><span class='match'>ba<\/span>nana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimo<span class='match'>ya<\/span><\/li>\n  <li>arán<span class='match'>da<\/span>no<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(fruta, &quot;a.&quot;)</code></pre>
-<div id="htmlwidget-1747f24c34e82b2605c9" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1747f24c34e82b2605c9">{"x":{"html":"<ul>\n  <li>b<span class='match'>an<\/span>ana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li><span class='match'>ar<\/span>ándano<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7155adc8e673f71d2940" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7155adc8e673f71d2940">{"x":{"html":"<ul>\n  <li>b<span class='match'>an<\/span>ana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li><span class='match'>ar<\/span>ándano<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(fruta, &quot;.a.&quot;)</code></pre>
-<div id="htmlwidget-b92ae71054758491e56e" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b92ae71054758491e56e">{"x":{"html":"<ul>\n  <li><span class='match'>ban<\/span>ana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li>arán<span class='match'>dan<\/span>o<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4342ea982bccf0e5cf27" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4342ea982bccf0e5cf27">{"x":{"html":"<ul>\n  <li><span class='match'>ban<\/span>ana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li>arán<span class='match'>dan<\/span>o<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(fruta, &quot;^a&quot;)</code></pre>
-<div id="htmlwidget-745c298571836b82002d" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-745c298571836b82002d">{"x":{"html":"<ul>\n  <li>banana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li><span class='match'>a<\/span>rándano<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-a235a6c68799c7c06b6f" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a235a6c68799c7c06b6f">{"x":{"html":"<ul>\n  <li>banana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li><span class='match'>a<\/span>rándano<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(fruta, &quot;a$&quot;)</code></pre>
-<div id="htmlwidget-d5aaa7096b453fdb7851" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d5aaa7096b453fdb7851">{"x":{"html":"<ul>\n  <li>banan<span class='match'>a<\/span><\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoy<span class='match'>a<\/span><\/li>\n  <li>arándano<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-a497bf15b20889e3dc5a" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a497bf15b20889e3dc5a">{"x":{"html":"<ul>\n  <li>banan<span class='match'>a<\/span><\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoy<span class='match'>a<\/span><\/li>\n  <li>arándano<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(fruta, &quot;^a..&quot;)</code></pre>
-<p><div id="htmlwidget-2f08a079798281fa6b1b" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2f08a079798281fa6b1b">{"x":{"html":"<ul>\n  <li>banana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li><span class='match'>ará<\/span>ndano<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script> - Nuevamente usamos el backlash <code>\\</code>para terminar la regex e iniciar una nueva</p>
+<p><div id="htmlwidget-36afb0a46c7e8236586d" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-36afb0a46c7e8236586d">{"x":{"html":"<ul>\n  <li>banana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li><span class='match'>ará<\/span>ndano<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script> - Nuevamente usamos el backlash <code>\\</code>para terminar la regex e iniciar una nueva</p>
 <pre class="r"><code>random &lt;- c(&quot;ab&quot;, &quot;a.b&quot;, &quot;b\\ef&quot;)
 
 str_view(random, &quot;a.&quot;)</code></pre>
-<div id="htmlwidget-4f1df0629752af3e6918" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4f1df0629752af3e6918">{"x":{"html":"<ul>\n  <li><span class='match'>ab<\/span><\/li>\n  <li><span class='match'>a.<\/span>b<\/li>\n  <li>b\\ef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-88e4b371feac30d8122e" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-88e4b371feac30d8122e">{"x":{"html":"<ul>\n  <li><span class='match'>ab<\/span><\/li>\n  <li><span class='match'>a.<\/span>b<\/li>\n  <li>b\\ef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(random, &quot;a\\.&quot;)</code></pre>
-<div id="htmlwidget-227e497b153ceed95444" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-227e497b153ceed95444">{"x":{"html":"<ul>\n  <li>ab<\/li>\n  <li><span class='match'>a.<\/span>b<\/li>\n  <li>b\\ef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-151bb1c6fcccf24a49d3" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-151bb1c6fcccf24a49d3">{"x":{"html":"<ul>\n  <li>ab<\/li>\n  <li><span class='match'>a.<\/span>b<\/li>\n  <li>b\\ef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(random, &quot;b\\\\&quot;)</code></pre>
-<div id="htmlwidget-3aef87e8aea6331a91a9" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3aef87e8aea6331a91a9">{"x":{"html":"<ul>\n  <li>ab<\/li>\n  <li>a.b<\/li>\n  <li><span class='match'>b\\<\/span>ef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b9470dcad164ed271b94" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b9470dcad164ed271b94">{"x":{"html":"<ul>\n  <li>ab<\/li>\n  <li>a.b<\/li>\n  <li><span class='match'>b\\<\/span>ef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p><strong>Ejercicios</strong></p>
 <ul>
 <li>¿Cómo harías coincidir la secuencia &quot;’?</li>
@@ -2625,16 +2625,16 @@ str_view(random, &quot;a.&quot;)</code></pre>
 writeLines(sec)</code></pre>
 <pre><code>## &quot;&#39;\</code></pre>
 <pre class="r"><code>str_view(sec, &quot;\&quot;\\&#39;\\\\&quot;)</code></pre>
-<div id="htmlwidget-b435b2aa949a994e282d" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b435b2aa949a994e282d">{"x":{"html":"<ul>\n  <li><span class='match'>\"'\\<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d16a176691b78047fbc9" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d16a176691b78047fbc9">{"x":{"html":"<ul>\n  <li><span class='match'>\"'\\<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>¿Con qué patrones coincidiría la expresión regular......? ¿Cómo la representarías en una cadena?</p>
 <pre class="r"><code>sec2 &lt;- &quot;\\..\\..\\..&quot;
 
 writeLines(sec2)</code></pre>
 <pre><code>## \..\..\..</code></pre>
 <pre class="r"><code>str_view(sec2, &quot;\\\\..\\\\..\\\\..&quot;)</code></pre>
-<div id="htmlwidget-4b9088c59b6bcc740e26" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4b9088c59b6bcc740e26">{"x":{"html":"<ul>\n  <li><span class='match'>\\..\\..\\..<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c6373c3083f1f0e420f9" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c6373c3083f1f0e420f9">{"x":{"html":"<ul>\n  <li><span class='match'>\\..\\..\\..<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>Dado el corpus de palabras comunes en datos::palabras, crea una expresión regular que busque palabras que:</p>
 <ul>
 <li><p>Empiecen con “y”.</p></li>
@@ -2642,35 +2642,34 @@ writeLines(sec2)</code></pre>
 <li><p>Tengan una extensión de exactamente tres letras. (¡No hagas trampa usando str_length()!)</p></li>
 <li><p>Tengan siete letras o más.</p></li>
 </ul>
-<pre class="r"><code>plbrs &lt;- as_tibble(datos::palabras)</code></pre>
-<pre><code>## Warning: Calling `as_tibble()` on a vector is discouraged, because the behavior is likely to change in the future. Use `tibble::enframe(name = NULL)` instead.
-## This warning is displayed once per session.</code></pre>
-<pre class="r"><code>plbrs %&gt;% 
+<pre class="r"><code>plbrs &lt;- enframe(datos::palabras)
+
+plbrs %&gt;% 
   filter(str_detect(value, &quot;^y&quot;))</code></pre>
-<pre><code>## # A tibble: 3 x 1
-##   value
-##   &lt;chr&gt;
-## 1 y    
-## 2 ya   
-## 3 yo</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##    name value
+##   &lt;int&gt; &lt;chr&gt;
+## 1   996 y    
+## 2   997 ya   
+## 3   998 yo</code></pre>
 <pre class="r"><code>plbrs %&gt;% 
   filter(str_detect(value, &quot;x$&quot;))</code></pre>
-<pre><code>## # A tibble: 1 x 1
-##   value
-##   &lt;chr&gt;
-## 1 ex</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##    name value
+##   &lt;int&gt; &lt;chr&gt;
+## 1   338 ex</code></pre>
 <pre class="r"><code>plbrs %&gt;% 
   filter(str_detect(value, &quot;^...$&quot;)) %&gt;% 
   head()</code></pre>
-<pre><code>## # A tibble: 6 x 1
-##   value
-##   &lt;chr&gt;
-## 1 ahí  
-## 2 año  
-## 3 así  
-## 4 aun  
-## 5 aún  
-## 6 con</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##    name value
+##   &lt;int&gt; &lt;chr&gt;
+## 1    17 ahí  
+## 2    44 año  
+## 3    60 así  
+## 4    69 aun  
+## 5    70 aún  
+## 6   149 con</code></pre>
 <pre class="r"><code>plbrs %&gt;% 
   filter(str_detect(value, &quot;^.......&quot;)) %&gt;% 
   mutate(lenght = str_length(value) &gt;= 7) %&gt;% 
@@ -2679,6 +2678,7 @@ writeLines(sec2)</code></pre>
 ##   lenght     n
 ##   &lt;lgl&gt;  &lt;int&gt;
 ## 1 TRUE     365</code></pre>
+</div>
 <div id="clases-de-caracteres" class="section level4">
 <h4>Clases de caracteres</h4>
 <ul>
@@ -2686,7 +2686,110 @@ writeLines(sec2)</code></pre>
 <li><p><code>\s</code>: concide con espacio en blanco</p></li>
 <li><p><code>[abc]</code>: coincide con a, b o c</p></li>
 <li><p><code>[^abc]</code>: coincide con todo menos a,b o c</p></li>
+<li><p>Los caracteres que necesitan barras invertidas para escapar son <code>]</code>, <code>\</code>, <code>^</code>, <code>-</code>.</p></li>
+<li><p>Se puede usar para disyuntivos <code>|</code></p></li>
 </ul>
+<pre class="r"><code>str_view(c(&quot;cómo&quot;, &quot;como&quot;), &quot;(ó|o)&quot;)</code></pre>
+<div id="htmlwidget-c9930b248875350a699c" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c9930b248875350a699c">{"x":{"html":"<ul>\n  <li>c<span class='match'>ó<\/span>mo<\/li>\n  <li>c<span class='match'>o<\/span>mo<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>Crea una expresión regular que encuentre todas las palabras que:</p>
+<ul>
+<li>Empiecen con una vocal.</li>
+</ul>
+<pre class="r"><code>plbrs %&gt;% 
+  filter(str_detect(value, &quot;^[aeiou]&quot;))</code></pre>
+<pre><code>## # A tibble: 221 x 2
+##     name value      
+##    &lt;int&gt; &lt;chr&gt;      
+##  1     1 a          
+##  2     2 abril      
+##  3     3 acción     
+##  4     4 acciones   
+##  5     5 acerca     
+##  6     6 actitud    
+##  7     7 actividad  
+##  8     8 actividades
+##  9     9 acto       
+## 10    10 actual     
+## # ... with 211 more rows</code></pre>
+<ul>
+<li>Solo contengan consonantes. (Pista: piensa en cómo buscar coincidencias para “no”-vocales.)</li>
+</ul>
+<pre class="r"><code>plbrs %&gt;% 
+  filter(str_detect(value, &quot;^[^aeiou]+$&quot;)) %&gt;% 
+  head()</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##    name value
+##   &lt;int&gt; &lt;chr&gt;
+## 1    76 b    
+## 2    93 c    
+## 3   194 d    
+## 4   267 él   
+## 5   378 g    
+## 6   461 j</code></pre>
+<ul>
+<li>Terminen en ón, pero no en ión.</li>
+</ul>
+<pre class="r"><code>plbrs %&gt;% 
+  filter(str_detect(value, &quot;[^ión]ón$&quot;))</code></pre>
+<pre><code>## # A tibble: 2 x 2
+##    name value  
+##   &lt;int&gt; &lt;chr&gt;  
+## 1   168 corazón
+## 2   788 razón</code></pre>
+<ul>
+<li>Terminen con ndo or ado.</li>
+</ul>
+<pre class="r"><code>plbrs %&gt;% 
+  filter(str_detect(value, &quot;ndo$|ado$&quot;))</code></pre>
+<pre><code>## # A tibble: 17 x 2
+##     name value    
+##    &lt;int&gt; &lt;chr&gt;    
+##  1   181 cuando   
+##  2   196 dado     
+##  3   214 demasiado
+##  4   317 estado   
+##  5   353 fernando 
+##  6   360 fondo    
+##  7   386 grado    
+##  8   407 haciendo 
+##  9   477 lado     
+## 10   493 llamado  
+## 11   495 llegado  
+## 12   546 mercado  
+## 13   587 mundo    
+## 14   669 pasado   
+## 15   805 resultado
+## 16   836 segundo  
+## 17   858 siendo</code></pre>
+<pre class="r"><code>plbrs %&gt;% 
+  filter(str_detect(value, &quot;(n|a)do$&quot;))</code></pre>
+<pre><code>## # A tibble: 17 x 2
+##     name value    
+##    &lt;int&gt; &lt;chr&gt;    
+##  1   181 cuando   
+##  2   196 dado     
+##  3   214 demasiado
+##  4   317 estado   
+##  5   353 fernando 
+##  6   360 fondo    
+##  7   386 grado    
+##  8   407 haciendo 
+##  9   477 lado     
+## 10   493 llamado  
+## 11   495 llegado  
+## 12   546 mercado  
+## 13   587 mundo    
+## 14   669 pasado   
+## 15   805 resultado
+## 16   836 segundo  
+## 17   858 siendo</code></pre>
+<ul>
+<li>¿Siempre a una “q” la sigue una “u”?</li>
+</ul>
+<p>Escribe una expresión regular que permita buscar un verbo que haya sido escrito usando voseo en segunda persona plural (por ejemplo, queréis en vez de quieren).</p>
+<p>Crea una expresión regular que coincida con la forma en que habitualmente se escriben los números de teléfono en tu país.</p>
+<p>En inglés existe una regla que dice que la letra i va siempre antes de la e, excepto cuando está después de una c&quot;. Verifica empíricamente esta regla utilizando las palabras contenidas en stringr::words.</p>
 </div>
 </div>
 </div>
