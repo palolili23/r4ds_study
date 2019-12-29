@@ -74,7 +74,7 @@ writeLines(backlash)
 #### Largo de cadenas: str_length()
 
 ```{r}
-fruta <- c("banana", "kiwi", "Chirimoya", "arándano", NA)
+fruta <- c("banana", "kiwi", "Chirimoya", "arándano", "papaya", NA)
 
 str_length(fruta)
 ```
@@ -295,11 +295,164 @@ plbrs %>%
 
 - ¿Siempre a una “q” la sigue una “u”?
 
-Escribe una expresión regular que permita buscar un verbo que haya sido escrito usando voseo en segunda persona plural
-(por ejemplo, queréis en vez de quieren).
+```{r}
+plbrs %>% 
+  filter(str_detect(value, "q"))
 
-Crea una expresión regular que coincida con la forma en que habitualmente se escriben los números de teléfono en tu país.
+plbrs %>% 
+  filter(str_detect(value, "qu"))
+
+plbrs %>% 
+  filter(str_detect(value, "q[^u]"))
+
+```
 
 En inglés existe una regla que dice que la letra i va siempre antes de la e, excepto cuando está después de una c". Verifica empíricamente esta regla utilizando las palabras contenidas en stringr::words.
 
+```{r}
+enframe(words) %>%
+  filter(str_detect(value, "[^c]ie"))
+
+enframe(words) %>%
+  filter(str_detect(value, "cie|[^c]ie"))
+
+
+```
+
+#### Repeticiones
+
+- `?`: 0 o 1
+
+- `+`: 1 o más
+
+- `*`: 0 o más
+
+```{r}
+str_view(fruta, "a")
+
+str_view(fruta, "a?")
+
+str_view(fruta, ".a?")
+
+str_view(fruta, "a+")
+
+str_view(fruta, ".a+")
+
+str_view(fruta, "a.+")
+
+str_view(fruta, "a*")
+
+str_view(fruta, ".a*")
+
+str_view(fruta, "a.*")
+
+```
+
+Número de coincidencias
+
+- {n}: exactamente n
+
+- {n,}: n o más
+
+- {,m}: no más de m
+
+- {n,m}: entre n y m
+
+```{r}
+str_view(fruta, "a{1,}")
+```
+
+**Ejercicios**
+
+```{r}
+# Tomará cualquier string
+enframe(words) %>% 
+  filter(str_detect(value, "^.*$")) %>%
+  head()
+
+# Todo lo que esté entre un curly
+str_view("{banana}", "\\{.+\\}")
+
+#Para digits hay q hacer los dos backlash
+x <- c("123-456-7890", "1235-2351", "2019-06-06")
+str_view(x, "\\d{4}-\\d{2}-\\d{2}")
+```
+
+Create regular expressions to find all words that:
+
+- Start with three consonants.
+
+```{r}
+enframe(words) %>% 
+  filter(str_detect(value, "^[^aeiou]{3}")) %>% 
+  head()
+```
+
+- Have three or more vowels in a row.
+
+```{r}
+enframe(words) %>% 
+  filter(str_detect(value, "[aeiou]{3,}")) %>% 
+  head()
+```
+
+Have two or more vowel-consonant pairs in a row.
+
+```{r}
+enframe(words) %>% 
+  filter(str_detect(value, "([aeiou][^aeiou]){2,}")) %>% 
+  head() %>% 
+  pull(value) -> x
+  
+str_view(x, "([aeiou][^aeiou]){2,}", match = TRUE)
+```
+
+#### Agrupamiento y referencias previas
+
+Los parentesis sirven para crear un grupo de captura numerado, s
+```{r}
+str_view(fruta, "(..)")
+
+str_view(fruta, "(..)\\1")
+
+```
+
+Describe en palabras con qué coinciden estas expresiones:
+
+`(.)\1\1`
+
+```{r}
+str_view("baanaanaaa", "(.)\\1")
+
+str_view("baananaaa", "(..)\\1")
+
+str_view("baanaanaaa", "(.)\\1\\1")
+```
+
+`"(.)(.)\\2\\1"`
+
+```{r}
+str_view("babba", "(.)(.)\\2\\1")
+```
+
+`(..)\1`
+
+```{r}
+str_view("banana", "(..)\\1")
+```
+
+`"(.).\\1.\\1"`
+
+```{r}
+str_view("baacaanaa", "(.).\\1\\1")
+```
+
+`"(.)(.)(.).*\\3\\2\\1"`
+
+```{r}
+str_view(c("abcsgasgddsadgsdgcba",
+           "falalalabccba"),"(.)(.)(.).*\\3\\2\\1")
+```
+
+### Herramientas
 

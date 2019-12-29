@@ -12,7 +12,7 @@
 
 <meta name="author" content="Paloma" />
 
-<meta name="date" content="2019-12-28" />
+<meta name="date" content="2019-12-29" />
 
 <title>Chapter 14</title>
 
@@ -2445,7 +2445,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Chapter 14</h1>
 <h4 class="author">Paloma</h4>
-<h4 class="date">2019-12-28</h4>
+<h4 class="date">2019-12-29</h4>
 
 </div>
 
@@ -2492,21 +2492,21 @@ comilla_simple</code></pre>
 <h3>Funciones básicas</h3>
 <div id="largo-de-cadenas-str_length" class="section level4">
 <h4>Largo de cadenas: str_length()</h4>
-<pre class="r"><code>fruta &lt;- c(&quot;banana&quot;, &quot;kiwi&quot;, &quot;Chirimoya&quot;, &quot;arándano&quot;, NA)
+<pre class="r"><code>fruta &lt;- c(&quot;banana&quot;, &quot;kiwi&quot;, &quot;Chirimoya&quot;, &quot;arándano&quot;, &quot;papaya&quot;, NA)
 
 str_length(fruta)</code></pre>
-<pre><code>## [1]  6  4  9  8 NA</code></pre>
+<pre><code>## [1]  6  4  9  8  6 NA</code></pre>
 </div>
 <div id="combinar-cadenas-str_c" class="section level4">
 <h4>Combinar cadenas: str_c()</h4>
 <pre class="r"><code>str_c(fruta, sep = &quot;-&quot;)</code></pre>
-<pre><code>## [1] &quot;banana&quot;    &quot;kiwi&quot;      &quot;Chirimoya&quot; &quot;arándano&quot;  NA</code></pre>
+<pre><code>## [1] &quot;banana&quot;    &quot;kiwi&quot;      &quot;Chirimoya&quot; &quot;arándano&quot;  &quot;papaya&quot;    NA</code></pre>
 <pre class="r"><code>str_c(&quot;banana&quot;, &quot;kiwi&quot;, &quot;Chirimoya&quot;, sep = &quot;-&quot;)</code></pre>
 <pre><code>## [1] &quot;banana-kiwi-Chirimoya&quot;</code></pre>
 <pre class="r"><code>str_c(fruta, collapse = &quot;-&quot;)</code></pre>
 <pre><code>## [1] NA</code></pre>
 <pre class="r"><code>str_c(str_replace_na(fruta), collapse = &quot;-&quot;)</code></pre>
-<pre><code>## [1] &quot;banana-kiwi-Chirimoya-arándano-NA&quot;</code></pre>
+<pre><code>## [1] &quot;banana-kiwi-Chirimoya-arándano-papaya-NA&quot;</code></pre>
 <pre class="r"><code>helados &lt;-
   tibble(
     sabor = c(&quot;Chocolate&quot;, &quot;Frutilla&quot;),
@@ -2544,11 +2544,11 @@ helados %&gt;%
 <div id="dividir-cadenas-str_sub" class="section level4">
 <h4>Dividir cadenas: str_sub()</h4>
 <pre class="r"><code>fruta</code></pre>
-<pre><code>## [1] &quot;banana&quot;    &quot;kiwi&quot;      &quot;Chirimoya&quot; &quot;arándano&quot;  NA</code></pre>
+<pre><code>## [1] &quot;banana&quot;    &quot;kiwi&quot;      &quot;Chirimoya&quot; &quot;arándano&quot;  &quot;papaya&quot;    NA</code></pre>
 <pre class="r"><code>str_sub(fruta, 1, 3)</code></pre>
-<pre><code>## [1] &quot;ban&quot; &quot;kiw&quot; &quot;Chi&quot; &quot;ará&quot; NA</code></pre>
+<pre><code>## [1] &quot;ban&quot; &quot;kiw&quot; &quot;Chi&quot; &quot;ará&quot; &quot;pap&quot; NA</code></pre>
 <pre class="r"><code>str_sub(fruta, -3, -1)</code></pre>
-<pre><code>## [1] &quot;ana&quot; &quot;iwi&quot; &quot;oya&quot; &quot;ano&quot; NA</code></pre>
+<pre><code>## [1] &quot;ana&quot; &quot;iwi&quot; &quot;oya&quot; &quot;ano&quot; &quot;aya&quot; NA</code></pre>
 <pre class="r"><code>helados %&gt;% 
  mutate(sabor = str_sub(sabor, 1,3)) </code></pre>
 <pre><code>## # A tibble: 2 x 2
@@ -2583,39 +2583,39 @@ helados %&gt;%
 <li><p>Anclas son <code>^</code> para empieza con, y <code>$</code> termina con.</p></li>
 </ul>
 <pre class="r"><code>fruta</code></pre>
-<pre><code>## [1] &quot;banana&quot;    &quot;kiwi&quot;      &quot;Chirimoya&quot; &quot;arándano&quot;  NA</code></pre>
+<pre><code>## [1] &quot;banana&quot;    &quot;kiwi&quot;      &quot;Chirimoya&quot; &quot;arándano&quot;  &quot;papaya&quot;    NA</code></pre>
 <pre class="r"><code>str_view(fruta, &quot;a&quot;)</code></pre>
-<div id="htmlwidget-32f666b3b524811de06e" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-32f666b3b524811de06e">{"x":{"html":"<ul>\n  <li>b<span class='match'>a<\/span>nana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoy<span class='match'>a<\/span><\/li>\n  <li><span class='match'>a<\/span>rándano<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b2a59fdb9b6baf29eb53" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b2a59fdb9b6baf29eb53">{"x":{"html":"<ul>\n  <li>b<span class='match'>a<\/span>nana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoy<span class='match'>a<\/span><\/li>\n  <li><span class='match'>a<\/span>rándano<\/li>\n  <li>p<span class='match'>a<\/span>paya<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(fruta, &quot;.a&quot;)</code></pre>
-<div id="htmlwidget-8a13b655d2bb456fbc4a" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8a13b655d2bb456fbc4a">{"x":{"html":"<ul>\n  <li><span class='match'>ba<\/span>nana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimo<span class='match'>ya<\/span><\/li>\n  <li>arán<span class='match'>da<\/span>no<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b37fba7ecd7964a6e8d8" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b37fba7ecd7964a6e8d8">{"x":{"html":"<ul>\n  <li><span class='match'>ba<\/span>nana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimo<span class='match'>ya<\/span><\/li>\n  <li>arán<span class='match'>da<\/span>no<\/li>\n  <li><span class='match'>pa<\/span>paya<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(fruta, &quot;a.&quot;)</code></pre>
-<div id="htmlwidget-7155adc8e673f71d2940" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7155adc8e673f71d2940">{"x":{"html":"<ul>\n  <li>b<span class='match'>an<\/span>ana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li><span class='match'>ar<\/span>ándano<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3dc464a3b9fad20da19b" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3dc464a3b9fad20da19b">{"x":{"html":"<ul>\n  <li>b<span class='match'>an<\/span>ana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li><span class='match'>ar<\/span>ándano<\/li>\n  <li>p<span class='match'>ap<\/span>aya<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(fruta, &quot;.a.&quot;)</code></pre>
-<div id="htmlwidget-4342ea982bccf0e5cf27" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4342ea982bccf0e5cf27">{"x":{"html":"<ul>\n  <li><span class='match'>ban<\/span>ana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li>arán<span class='match'>dan<\/span>o<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-fa51b9559c8118bb25c4" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fa51b9559c8118bb25c4">{"x":{"html":"<ul>\n  <li><span class='match'>ban<\/span>ana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li>arán<span class='match'>dan<\/span>o<\/li>\n  <li><span class='match'>pap<\/span>aya<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(fruta, &quot;^a&quot;)</code></pre>
-<div id="htmlwidget-a235a6c68799c7c06b6f" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a235a6c68799c7c06b6f">{"x":{"html":"<ul>\n  <li>banana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li><span class='match'>a<\/span>rándano<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d7b3d4983f572055b44f" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d7b3d4983f572055b44f">{"x":{"html":"<ul>\n  <li>banana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li><span class='match'>a<\/span>rándano<\/li>\n  <li>papaya<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(fruta, &quot;a$&quot;)</code></pre>
-<div id="htmlwidget-a497bf15b20889e3dc5a" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a497bf15b20889e3dc5a">{"x":{"html":"<ul>\n  <li>banan<span class='match'>a<\/span><\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoy<span class='match'>a<\/span><\/li>\n  <li>arándano<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-9e2926d84cd4cdd48a1c" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9e2926d84cd4cdd48a1c">{"x":{"html":"<ul>\n  <li>banan<span class='match'>a<\/span><\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoy<span class='match'>a<\/span><\/li>\n  <li>arándano<\/li>\n  <li>papay<span class='match'>a<\/span><\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(fruta, &quot;^a..&quot;)</code></pre>
-<p><div id="htmlwidget-36afb0a46c7e8236586d" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-36afb0a46c7e8236586d">{"x":{"html":"<ul>\n  <li>banana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li><span class='match'>ará<\/span>ndano<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script> - Nuevamente usamos el backlash <code>\\</code>para terminar la regex e iniciar una nueva</p>
+<p><div id="htmlwidget-6be48dd0582d45519218" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6be48dd0582d45519218">{"x":{"html":"<ul>\n  <li>banana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li><span class='match'>ará<\/span>ndano<\/li>\n  <li>papaya<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script> - Nuevamente usamos el backlash <code>\\</code>para terminar la regex e iniciar una nueva</p>
 <pre class="r"><code>random &lt;- c(&quot;ab&quot;, &quot;a.b&quot;, &quot;b\\ef&quot;)
 
 str_view(random, &quot;a.&quot;)</code></pre>
-<div id="htmlwidget-88e4b371feac30d8122e" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-88e4b371feac30d8122e">{"x":{"html":"<ul>\n  <li><span class='match'>ab<\/span><\/li>\n  <li><span class='match'>a.<\/span>b<\/li>\n  <li>b\\ef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d35a5d55e026975bf0cb" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d35a5d55e026975bf0cb">{"x":{"html":"<ul>\n  <li><span class='match'>ab<\/span><\/li>\n  <li><span class='match'>a.<\/span>b<\/li>\n  <li>b\\ef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(random, &quot;a\\.&quot;)</code></pre>
-<div id="htmlwidget-151bb1c6fcccf24a49d3" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-151bb1c6fcccf24a49d3">{"x":{"html":"<ul>\n  <li>ab<\/li>\n  <li><span class='match'>a.<\/span>b<\/li>\n  <li>b\\ef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e49d6f92b29a7ac5ff99" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e49d6f92b29a7ac5ff99">{"x":{"html":"<ul>\n  <li>ab<\/li>\n  <li><span class='match'>a.<\/span>b<\/li>\n  <li>b\\ef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(random, &quot;b\\\\&quot;)</code></pre>
-<div id="htmlwidget-b9470dcad164ed271b94" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b9470dcad164ed271b94">{"x":{"html":"<ul>\n  <li>ab<\/li>\n  <li>a.b<\/li>\n  <li><span class='match'>b\\<\/span>ef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-713bd31f8d9e07265e8c" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-713bd31f8d9e07265e8c">{"x":{"html":"<ul>\n  <li>ab<\/li>\n  <li>a.b<\/li>\n  <li><span class='match'>b\\<\/span>ef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p><strong>Ejercicios</strong></p>
 <ul>
 <li>¿Cómo harías coincidir la secuencia &quot;’?</li>
@@ -2625,16 +2625,16 @@ str_view(random, &quot;a.&quot;)</code></pre>
 writeLines(sec)</code></pre>
 <pre><code>## &quot;&#39;\</code></pre>
 <pre class="r"><code>str_view(sec, &quot;\&quot;\\&#39;\\\\&quot;)</code></pre>
-<div id="htmlwidget-d16a176691b78047fbc9" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d16a176691b78047fbc9">{"x":{"html":"<ul>\n  <li><span class='match'>\"'\\<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e73212cc9b71a85fc949" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e73212cc9b71a85fc949">{"x":{"html":"<ul>\n  <li><span class='match'>\"'\\<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>¿Con qué patrones coincidiría la expresión regular......? ¿Cómo la representarías en una cadena?</p>
 <pre class="r"><code>sec2 &lt;- &quot;\\..\\..\\..&quot;
 
 writeLines(sec2)</code></pre>
 <pre><code>## \..\..\..</code></pre>
 <pre class="r"><code>str_view(sec2, &quot;\\\\..\\\\..\\\\..&quot;)</code></pre>
-<div id="htmlwidget-c6373c3083f1f0e420f9" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c6373c3083f1f0e420f9">{"x":{"html":"<ul>\n  <li><span class='match'>\\..\\..\\..<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-02d78b6f934820109b5d" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-02d78b6f934820109b5d">{"x":{"html":"<ul>\n  <li><span class='match'>\\..\\..\\..<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>Dado el corpus de palabras comunes en datos::palabras, crea una expresión regular que busque palabras que:</p>
 <ul>
 <li><p>Empiecen con “y”.</p></li>
@@ -2690,8 +2690,8 @@ plbrs %&gt;%
 <li><p>Se puede usar para disyuntivos <code>|</code></p></li>
 </ul>
 <pre class="r"><code>str_view(c(&quot;cómo&quot;, &quot;como&quot;), &quot;(ó|o)&quot;)</code></pre>
-<div id="htmlwidget-c9930b248875350a699c" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c9930b248875350a699c">{"x":{"html":"<ul>\n  <li>c<span class='match'>ó<\/span>mo<\/li>\n  <li>c<span class='match'>o<\/span>mo<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c8cd60cbf6aedf2ee640" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c8cd60cbf6aedf2ee640">{"x":{"html":"<ul>\n  <li>c<span class='match'>ó<\/span>mo<\/li>\n  <li>c<span class='match'>o<\/span>mo<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>Crea una expresión regular que encuentre todas las palabras que:</p>
 <ul>
 <li>Empiecen con una vocal.</li>
@@ -2787,10 +2787,231 @@ plbrs %&gt;%
 <ul>
 <li>¿Siempre a una “q” la sigue una “u”?</li>
 </ul>
-<p>Escribe una expresión regular que permita buscar un verbo que haya sido escrito usando voseo en segunda persona plural (por ejemplo, queréis en vez de quieren).</p>
-<p>Crea una expresión regular que coincida con la forma en que habitualmente se escriben los números de teléfono en tu país.</p>
+<pre class="r"><code>plbrs %&gt;% 
+  filter(str_detect(value, &quot;q&quot;))</code></pre>
+<pre><code>## # A tibble: 24 x 2
+##     name value    
+##    &lt;int&gt; &lt;chr&gt;    
+##  1    49 aquel    
+##  2    50 aquella  
+##  3    51 aquellas 
+##  4    52 aquellos 
+##  5    53 aquí     
+##  6    71 aunque   
+##  7   180 cualquier
+##  8   292 equipo   
+##  9   460 izquierda
+## 10   678 pequeña  
+## # ... with 14 more rows</code></pre>
+<pre class="r"><code>plbrs %&gt;% 
+  filter(str_detect(value, &quot;qu&quot;))</code></pre>
+<pre><code>## # A tibble: 24 x 2
+##     name value    
+##    &lt;int&gt; &lt;chr&gt;    
+##  1    49 aquel    
+##  2    50 aquella  
+##  3    51 aquellas 
+##  4    52 aquellos 
+##  5    53 aquí     
+##  6    71 aunque   
+##  7   180 cualquier
+##  8   292 equipo   
+##  9   460 izquierda
+## 10   678 pequeña  
+## # ... with 14 more rows</code></pre>
+<pre class="r"><code>plbrs %&gt;% 
+  filter(str_detect(value, &quot;q[^u]&quot;))</code></pre>
+<pre><code>## # A tibble: 0 x 2
+## # ... with 2 variables: name &lt;int&gt;, value &lt;chr&gt;</code></pre>
 <p>En inglés existe una regla que dice que la letra i va siempre antes de la e, excepto cuando está después de una c&quot;. Verifica empíricamente esta regla utilizando las palabras contenidas en stringr::words.</p>
+<pre class="r"><code>enframe(words) %&gt;%
+  filter(str_detect(value, &quot;[^c]ie&quot;))</code></pre>
+<pre><code>## # A tibble: 13 x 2
+##     name value     
+##    &lt;int&gt; &lt;chr&gt;     
+##  1     7 achieve   
+##  2    86 believe   
+##  3   111 brief     
+##  4   158 client    
+##  5   228 die       
+##  6   292 experience
+##  7   310 field     
+##  8   342 friend    
+##  9   472 lie       
+## 10   620 piece     
+## 11   670 quiet     
+## 12   872 tie       
+## 13   918 view</code></pre>
+<pre class="r"><code>enframe(words) %&gt;%
+  filter(str_detect(value, &quot;cie|[^c]ie&quot;))</code></pre>
+<pre><code>## # A tibble: 15 x 2
+##     name value     
+##    &lt;int&gt; &lt;chr&gt;     
+##  1     7 achieve   
+##  2    86 believe   
+##  3   111 brief     
+##  4   158 client    
+##  5   228 die       
+##  6   292 experience
+##  7   310 field     
+##  8   342 friend    
+##  9   472 lie       
+## 10   620 piece     
+## 11   670 quiet     
+## 12   726 science   
+## 13   781 society   
+## 14   872 tie       
+## 15   918 view</code></pre>
 </div>
+<div id="repeticiones" class="section level4">
+<h4>Repeticiones</h4>
+<ul>
+<li><p><code>?</code>: 0 o 1</p></li>
+<li><p><code>+</code>: 1 o más</p></li>
+<li><p><code>*</code>: 0 o más</p></li>
+</ul>
+<pre class="r"><code>str_view(fruta, &quot;a&quot;)</code></pre>
+<div id="htmlwidget-37dfb513fc33a5fd2e0e" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-37dfb513fc33a5fd2e0e">{"x":{"html":"<ul>\n  <li>b<span class='match'>a<\/span>nana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoy<span class='match'>a<\/span><\/li>\n  <li><span class='match'>a<\/span>rándano<\/li>\n  <li>p<span class='match'>a<\/span>paya<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_view(fruta, &quot;a?&quot;)</code></pre>
+<div id="htmlwidget-609e2713567a5d294cd0" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-609e2713567a5d294cd0">{"x":{"html":"<ul>\n  <li><span class='match'><\/span>banana<\/li>\n  <li><span class='match'><\/span>kiwi<\/li>\n  <li><span class='match'><\/span>Chirimoya<\/li>\n  <li><span class='match'>a<\/span>rándano<\/li>\n  <li><span class='match'><\/span>papaya<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_view(fruta, &quot;.a?&quot;)</code></pre>
+<div id="htmlwidget-720ccefa209713d8acad" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-720ccefa209713d8acad">{"x":{"html":"<ul>\n  <li><span class='match'>ba<\/span>nana<\/li>\n  <li><span class='match'>k<\/span>iwi<\/li>\n  <li><span class='match'>C<\/span>hirimoya<\/li>\n  <li><span class='match'>a<\/span>rándano<\/li>\n  <li><span class='match'>pa<\/span>paya<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_view(fruta, &quot;a+&quot;)</code></pre>
+<div id="htmlwidget-5548f3d11aab80e7fb48" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5548f3d11aab80e7fb48">{"x":{"html":"<ul>\n  <li>b<span class='match'>a<\/span>nana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoy<span class='match'>a<\/span><\/li>\n  <li><span class='match'>a<\/span>rándano<\/li>\n  <li>p<span class='match'>a<\/span>paya<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_view(fruta, &quot;.a+&quot;)</code></pre>
+<div id="htmlwidget-4025e45dca8db90668ec" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4025e45dca8db90668ec">{"x":{"html":"<ul>\n  <li><span class='match'>ba<\/span>nana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimo<span class='match'>ya<\/span><\/li>\n  <li>arán<span class='match'>da<\/span>no<\/li>\n  <li><span class='match'>pa<\/span>paya<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_view(fruta, &quot;a.+&quot;)</code></pre>
+<div id="htmlwidget-1cd831407caefa9ad9b6" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1cd831407caefa9ad9b6">{"x":{"html":"<ul>\n  <li>b<span class='match'>anana<\/span><\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li><span class='match'>arándano<\/span><\/li>\n  <li>p<span class='match'>apaya<\/span><\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_view(fruta, &quot;a*&quot;)</code></pre>
+<div id="htmlwidget-c4a8af549d24b2f3272e" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c4a8af549d24b2f3272e">{"x":{"html":"<ul>\n  <li><span class='match'><\/span>banana<\/li>\n  <li><span class='match'><\/span>kiwi<\/li>\n  <li><span class='match'><\/span>Chirimoya<\/li>\n  <li><span class='match'>a<\/span>rándano<\/li>\n  <li><span class='match'><\/span>papaya<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_view(fruta, &quot;.a*&quot;)</code></pre>
+<div id="htmlwidget-dd0ef9dc6f53cb5bd163" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-dd0ef9dc6f53cb5bd163">{"x":{"html":"<ul>\n  <li><span class='match'>ba<\/span>nana<\/li>\n  <li><span class='match'>k<\/span>iwi<\/li>\n  <li><span class='match'>C<\/span>hirimoya<\/li>\n  <li><span class='match'>a<\/span>rándano<\/li>\n  <li><span class='match'>pa<\/span>paya<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_view(fruta, &quot;a.*&quot;)</code></pre>
+<div id="htmlwidget-a81c1de7f7f810921b30" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a81c1de7f7f810921b30">{"x":{"html":"<ul>\n  <li>b<span class='match'>anana<\/span><\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoy<span class='match'>a<\/span><\/li>\n  <li><span class='match'>arándano<\/span><\/li>\n  <li>p<span class='match'>apaya<\/span><\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>Número de coincidencias</p>
+<ul>
+<li><p>{n}: exactamente n</p></li>
+<li><p>{n,}: n o más</p></li>
+<li><p>{,m}: no más de m</p></li>
+<li><p>{n,m}: entre n y m</p></li>
+</ul>
+<pre class="r"><code>str_view(fruta, &quot;a{1,}&quot;)</code></pre>
+<div id="htmlwidget-24e164cc23273705264a" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-24e164cc23273705264a">{"x":{"html":"<ul>\n  <li>b<span class='match'>a<\/span>nana<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoy<span class='match'>a<\/span><\/li>\n  <li><span class='match'>a<\/span>rándano<\/li>\n  <li>p<span class='match'>a<\/span>paya<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p><strong>Ejercicios</strong></p>
+<pre class="r"><code># Tomará cualquier string
+enframe(words) %&gt;% 
+  filter(str_detect(value, &quot;^.*$&quot;)) %&gt;%
+  head()</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##    name value   
+##   &lt;int&gt; &lt;chr&gt;   
+## 1     1 a       
+## 2     2 able    
+## 3     3 about   
+## 4     4 absolute
+## 5     5 accept  
+## 6     6 account</code></pre>
+<pre class="r"><code># Todo lo que esté entre un curly
+str_view(&quot;{banana}&quot;, &quot;\\{.+\\}&quot;)</code></pre>
+<div id="htmlwidget-a24da4429d6ae1e21cbe" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a24da4429d6ae1e21cbe">{"x":{"html":"<ul>\n  <li><span class='match'>{banana}<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>#Para digits hay q hacer los dos backlash
+x &lt;- c(&quot;123-456-7890&quot;, &quot;1235-2351&quot;, &quot;2019-06-06&quot;)
+str_view(x, &quot;\\d{4}-\\d{2}-\\d{2}&quot;)</code></pre>
+<div id="htmlwidget-33b0fe133a48e9ebd860" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-33b0fe133a48e9ebd860">{"x":{"html":"<ul>\n  <li>123-456-7890<\/li>\n  <li>1235-2351<\/li>\n  <li><span class='match'>2019-06-06<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>Create regular expressions to find all words that:</p>
+<ul>
+<li>Start with three consonants.</li>
+</ul>
+<pre class="r"><code>enframe(words) %&gt;% 
+  filter(str_detect(value, &quot;^[^aeiou]{3}&quot;)) %&gt;% 
+  head()</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##    name value    
+##   &lt;int&gt; &lt;chr&gt;    
+## 1   150 Christ   
+## 2   151 Christmas
+## 3   249 dry      
+## 4   328 fly      
+## 5   538 mrs      
+## 6   724 scheme</code></pre>
+<ul>
+<li>Have three or more vowels in a row.</li>
+</ul>
+<pre class="r"><code>enframe(words) %&gt;% 
+  filter(str_detect(value, &quot;[aeiou]{3,}&quot;)) %&gt;% 
+  head()</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##    name value   
+##   &lt;int&gt; &lt;chr&gt;   
+## 1    79 beauty  
+## 2   565 obvious 
+## 3   644 previous
+## 4   670 quiet   
+## 5   741 serious 
+## 6   915 various</code></pre>
+<p>Have two or more vowel-consonant pairs in a row.</p>
+<pre class="r"><code>enframe(words) %&gt;% 
+  filter(str_detect(value, &quot;([aeiou][^aeiou]){2,}&quot;)) %&gt;% 
+  head() %&gt;% 
+  pull(value) -&gt; x
+  
+str_view(x, &quot;([aeiou][^aeiou]){2,}&quot;, match = TRUE)</code></pre>
+<div id="htmlwidget-2214a4d85f91520d103f" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2214a4d85f91520d103f">{"x":{"html":"<ul>\n  <li>abs<span class='match'>olut<\/span>e<\/li>\n  <li><span class='match'>agen<\/span>t<\/li>\n  <li><span class='match'>alon<\/span>g<\/li>\n  <li><span class='match'>americ<\/span>a<\/li>\n  <li><span class='match'>anot<\/span>her<\/li>\n  <li><span class='match'>apar<\/span>t<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="agrupamiento-y-referencias-previas" class="section level4">
+<h4>Agrupamiento y referencias previas</h4>
+<p>Los parentesis sirven para crear un grupo de captura numerado, s</p>
+<pre class="r"><code>str_view(fruta, &quot;(..)&quot;)</code></pre>
+<div id="htmlwidget-c33ac9f181540a2e0e48" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c33ac9f181540a2e0e48">{"x":{"html":"<ul>\n  <li><span class='match'>ba<\/span>nana<\/li>\n  <li><span class='match'>ki<\/span>wi<\/li>\n  <li><span class='match'>Ch<\/span>irimoya<\/li>\n  <li><span class='match'>ar<\/span>ándano<\/li>\n  <li><span class='match'>pa<\/span>paya<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_view(fruta, &quot;(..)\\1&quot;)</code></pre>
+<div id="htmlwidget-61681dc5de8fb34a5e39" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-61681dc5de8fb34a5e39">{"x":{"html":"<ul>\n  <li>b<span class='match'>anan<\/span>a<\/li>\n  <li>kiwi<\/li>\n  <li>Chirimoya<\/li>\n  <li>arándano<\/li>\n  <li><span class='match'>papa<\/span>ya<\/li>\n  <li>NA<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>Describe en palabras con qué coinciden estas expresiones:</p>
+<p><code>(.)\1\1</code></p>
+<pre class="r"><code>str_view(&quot;baanaanaaa&quot;, &quot;(.)\\1&quot;)</code></pre>
+<div id="htmlwidget-39a1ddf90d6f3c0dd51b" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-39a1ddf90d6f3c0dd51b">{"x":{"html":"<ul>\n  <li>b<span class='match'>aa<\/span>naanaaa<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_view(&quot;baananaaa&quot;, &quot;(..)\\1&quot;)</code></pre>
+<div id="htmlwidget-4dfe69afd689f95b03de" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4dfe69afd689f95b03de">{"x":{"html":"<ul>\n  <li>ba<span class='match'>anan<\/span>aaa<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_view(&quot;baanaanaaa&quot;, &quot;(.)\\1\\1&quot;)</code></pre>
+<div id="htmlwidget-16f93ab367600b45dfc6" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-16f93ab367600b45dfc6">{"x":{"html":"<ul>\n  <li>baanaan<span class='match'>aaa<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p><code>&quot;(.)(.)\\2\\1&quot;</code></p>
+<pre class="r"><code>str_view(&quot;babba&quot;, &quot;(.)(.)\\2\\1&quot;)</code></pre>
+<div id="htmlwidget-a1cf1ff0742df1a761cb" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a1cf1ff0742df1a761cb">{"x":{"html":"<ul>\n  <li>b<span class='match'>abba<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p><code>(..)\1</code></p>
+<pre class="r"><code>str_view(&quot;banana&quot;, &quot;(..)\\1&quot;)</code></pre>
+<div id="htmlwidget-27a34d6c6fc9c22f94c2" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-27a34d6c6fc9c22f94c2">{"x":{"html":"<ul>\n  <li>b<span class='match'>anan<\/span>a<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p><code>&quot;(.).\\1.\\1&quot;</code></p>
+<pre class="r"><code>str_view(&quot;baacaanaa&quot;, &quot;(.).\\1\\1&quot;)</code></pre>
+<div id="htmlwidget-09c962fcf558528a4b95" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-09c962fcf558528a4b95">{"x":{"html":"<ul>\n  <li>ba<span class='match'>acaa<\/span>naa<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p><code>&quot;(.)(.)(.).*\\3\\2\\1&quot;</code></p>
+<pre class="r"><code>str_view(c(&quot;abcsgasgddsadgsdgcba&quot;,
+           &quot;falalalabccba&quot;),&quot;(.)(.)(.).*\\3\\2\\1&quot;)</code></pre>
+<div id="htmlwidget-c9ff72ffa9080d118798" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c9ff72ffa9080d118798">{"x":{"html":"<ul>\n  <li><span class='match'>abcsgasgddsadgsdgcba<\/span><\/li>\n  <li>f<span class='match'>alalala<\/span>bccba<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="herramientas" class="section level3">
+<h3>Herramientas</h3>
 </div>
 </div>
 
