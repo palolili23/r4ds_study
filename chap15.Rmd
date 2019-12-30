@@ -224,9 +224,15 @@ df %>%
   head() %>% mytable()
 
 df %>%
-  mutate(partyid = case_when(partyid,
-    "NoA" = "No answer",
+  mutate(partyid = case_when(
+    partyid == "No answer" ~ "NoA",
     TRUE ~ partyid)) %>% 
+  count(partyid)
+
+df %>%
+  mutate(partyid = case_when(
+    partyid == "No answer" ~ "NoA",
+    TRUE ~ "Others")) %>% 
   count(partyid)
 ```
 
@@ -235,7 +241,9 @@ df %>%
   mutate(partyid = fct_recode(partyid,
     "NoA" = "No answer")) %>% 
   count(partyid) %>% 
-  head() %>% mytable()
+  head() %>% mytable
+
+
 ```
 
 ### Collapse
